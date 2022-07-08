@@ -10,7 +10,7 @@ def write_data(timkiem, URL_all):
         thewriter.writeheader()
         for url in URL_all:
             STT += 1
-            print(STT, url)
+            # print(STT, url)
             thewriter.writerow({'STT': STT, 'link post': url})
 
     a = "\n"

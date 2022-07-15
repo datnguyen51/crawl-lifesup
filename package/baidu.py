@@ -16,36 +16,44 @@ def get_url_website_with_baidu(options, timkiem):
     search_baidu.send_keys(Keys.ENTER)
 
     all_profile_url = []
-    while True:
-        time.sleep(8)
-        page_source = BeautifulSoup(driver_baidu.page_source, "html.parser")
+    page_number = 1
+    try:
+        while True:
+            time.sleep(10)
+            page_source = BeautifulSoup(driver_baidu.page_source, "html.parser")
 
-        time.sleep(8)
-        profiles = page_source.find_all("div", class_="result c-container xpath-log new-pmd")
+            time.sleep(10)
+            profiles = page_source.find_all("div", class_="result c-container xpath-log new-pmd")
 
-        for profile in profiles:
-            ID = profile.get('mu')
-            if ID not in all_profile_url:
-                all_profile_url.append(ID)
+            for profile in profiles:
+                ID = profile.get('mu')
+                if ID not in all_profile_url:
+                    all_profile_url.append(ID)
 
-        sleep(2)
-        driver_baidu.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-        sleep(2)
+            time.sleep(10)
+            driver_baidu.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+            time.sleep(30)
 
-        try:
-            next_botton = driver_baidu.find_elements(By.CLASS_NAME, 'n')
-            if (len(next_botton) > 1):
-                if next_botton[1].get_attribute('href'):
-                    next_botton[1].click()
+            try:
+                next_button = driver_baidu.find_elements(By.CLASS_NAME, 'n')
+                if page_number == 1:
+                    if next_button[0].get_attribute('href'):
+                        next_button[0].click()
+                    else:
+                        break
+                elif (len(next_button) > 1):
+                    if next_button[1].get_attribute('href'):
+                        next_button[1].click()
+                    else:
+                        break
                 else:
                     break
-            else:
-                if next_botton[0].get_attribute('href'):
-                    next_botton[0].click()
-                else:
-                    break
-        except:
-            break
+            except:
+                break
 
+            page_number += 1
+    except:
+        pass
+    print('baidu')
     driver_baidu.close()
     return all_profile_url

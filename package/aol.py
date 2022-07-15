@@ -16,27 +16,30 @@ def get_url_website_with_aol(options, timkiem):
     search_aol.send_keys(Keys.ENTER)
 
     all_profile_url = []
-    while True:
-        time.sleep(10)
-        page_source = BeautifulSoup(driver_aol.page_source, "html.parser")
+    try:
+        while True:
+            time.sleep(10)
+            page_source = BeautifulSoup(driver_aol.page_source, "html.parser")
 
-        time.sleep(10)
-        profiles = page_source.find_all("div", class_="algo-sr")
+            time.sleep(10)
+            profiles = page_source.find_all("div", class_="algo-sr")
 
-        for profile in profiles:
-            ID = profile.find('a').get('href')
-            if ID not in all_profile_url:
-                all_profile_url.append(ID)
+            for profile in profiles:
+                ID = profile.find('a').get('href')
+                if ID not in all_profile_url:
+                    all_profile_url.append(ID)
 
-        sleep(10)
-        driver_aol.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-        sleep(30)
+            time.sleep(10)
+            driver_aol.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+            time.sleep(30)
 
-        try:
-            next_botton = driver_aol.find_element(By.CLASS_NAME, 'next')
-            next_botton.click()
-        except:
-            break
-
+            try:
+                next_button = driver_aol.find_element(By.CLASS_NAME, 'next')
+                next_button.click()
+            except:
+                break
+    except:
+        pass
+    print('aol')
     driver_aol.close()
     return all_profile_url

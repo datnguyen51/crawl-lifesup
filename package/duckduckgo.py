@@ -16,27 +16,30 @@ def get_url_website_with_duckduckgo(options, timkiem):
     search_duckduckgo.send_keys(Keys.ENTER)
 
     all_profile_url = []
-    while True:
-        time.sleep(10)
-        page_source = BeautifulSoup(driver_duckduckgo.page_source, "html.parser")
+    try:
+        while True:
+            time.sleep(10)
+            page_source = BeautifulSoup(driver_duckduckgo.page_source, "html.parser")
 
-        time.sleep(10)
-        profiles = page_source.find_all("a", class_="Rn_JXVtoPVAFyGkcaXyK")
+            time.sleep(10)
+            profiles = page_source.find_all("a", class_="Rn_JXVtoPVAFyGkcaXyK")
 
-        for profile in profiles:
-            ID = profile.get('href')
-            if ID not in all_profile_url:
-                all_profile_url.append(ID)
+            for profile in profiles:
+                ID = profile.get('href')
+                if ID not in all_profile_url:
+                    all_profile_url.append(ID)
 
-        sleep(10)
-        driver_duckduckgo.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-        sleep(30)
+            time.sleep(10)
+            driver_duckduckgo.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+            time.sleep(30)
 
-        try:
-            next_botton = driver_duckduckgo.find_element(By.CLASS_NAME, 'result--more__btn')
-            next_botton.click()
-        except:
-            break
-
+            try:
+                next_button = driver_duckduckgo.find_element(By.CLASS_NAME, 'result--more__btn')
+                next_button.click()
+            except:
+                break
+    except:
+        pass
+    print('duckduckgo')
     driver_duckduckgo.close()
     return all_profile_url

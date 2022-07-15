@@ -16,29 +16,33 @@ def get_url_website_with_bing(options, timkiem):
     search_bing.send_keys(Keys.ENTER)
 
     all_profile_url = []
-    while True:
-        page_source = BeautifulSoup(driver_bing.page_source, "html.parser")
+    try:
+        while True:
+            time.sleep(10)
+            page_source = BeautifulSoup(driver_bing.page_source, "html.parser")
 
-        time.sleep(8)
-        profiles = page_source.find_all("li", class_="b_algo")
+            time.sleep(10)
+            profiles = page_source.find_all("li", class_="b_algo")
 
-        for profile in profiles:
-            ID = profile.find('a').get('href')
-            if ID not in all_profile_url:
-                all_profile_url.append(ID)
+            for profile in profiles:
+                ID = profile.find('a').get('href')
+                if ID not in all_profile_url:
+                    all_profile_url.append(ID)
 
-        sleep(2)
-        driver_bing.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-        sleep(2)
+            time.sleep(20)
+            driver_bing.execute_script('window.scrollTo(0,document.body.scrollHeight)')
+            time.sleep(20)
 
-        try:
-            next_botton = driver_bing.find_element(By.CLASS_NAME, 'sb_pagN')
-            if next_botton.get_attribute('href'):
-                next_botton.click()
-            else:
+            try:
+                next_button = driver_bing.find_element(By.CLASS_NAME, 'sb_pagN')
+                if next_button.get_attribute('href'):
+                    next_button.click()
+                else:
+                    break
+            except:
                 break
-        except:
-            break
-
+    except:
+        pass
+    print('bing')
     driver_bing.close()
     return all_profile_url

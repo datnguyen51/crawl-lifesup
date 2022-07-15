@@ -28,13 +28,13 @@ def get_url_website_with_ecosia(options, timkiem):
             if ID not in all_profile_url:
                 all_profile_url.append(ID)
 
-        sleep(10)
+        time.sleep(10)
         driver_ecosia.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-        sleep(30)
+        time.sleep(30)
 
         try:
-            next_botton = driver_ecosia.find_element(By.CLASS_NAME, 'pagination-control-next')
-            next_botton.click()
+            next_button = driver_ecosia.find_element(By.CLASS_NAME, 'pagination-control-next')
+            next_button.click()
         except:
             break
 

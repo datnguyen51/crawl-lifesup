@@ -20,17 +20,15 @@ try:
     URLs_yandex = get_url_website_with_yandex(options, timkiem)
     URLs_duckduckgo = get_url_website_with_duckduckgo(options, timkiem)
     URLs_aol = get_url_website_with_aol(options, timkiem)
-    # URLs_baidu = get_url_website_with_baidu(options, timkiem)
+    URLs_baidu = get_url_website_with_baidu(options, timkiem)
 
     URL_all = URL_all + URLs_google
-    URL_all = URL_all + URLs_yahoo
     URL_all = URL_all + URLs_bing
+    URL_all = URL_all + URLs_yahoo
+    URL_all = URL_all + URLs_yandex
     URL_all = URL_all + URLs_duckduckgo
     URL_all = URL_all + URLs_aol
-    URL_all = URL_all + URLs_yandex
-    # URL_all = URL_all + URLs_baidu
-
-    # URL_all = URL_all + URLs_bing + URLs_google + URLs_yahoo
+    URL_all = URL_all + URLs_baidu
 
     write_data(timkiem, URL_all)
 
